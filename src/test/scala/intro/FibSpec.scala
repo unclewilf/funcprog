@@ -3,7 +3,7 @@ package intro
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{Matchers, PropSpec}
 
-class FibTest extends PropSpec with Matchers with PropertyChecks {
+class FibSpec extends PropSpec with Matchers with PropertyChecks {
 
   property("Fraction constructor throws IAE on bad data.") {
 
@@ -22,8 +22,6 @@ class FibTest extends PropSpec with Matchers with PropertyChecks {
     forAll (validCombos) { (n: Int, d: Int) =>
       Fib.fib(n) should be (d)
     }
-
   }
-
 }
 
