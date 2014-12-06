@@ -1,4 +1,4 @@
-package intro
+package gettingstarted
 
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{Matchers, PropSpec}

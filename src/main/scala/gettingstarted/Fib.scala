@@ -1,4 +1,4 @@
-package intro
+package gettingstarted
 
 import scala.annotation.tailrec
 
@@ -8,17 +8,14 @@ object Fib {
 
     @tailrec
     def loop(i:Int, pos:Int, prev: Int, current: Int): Int = {
-      if (pos==i) {
+
+      if (pos == i) {
         current
       } else {
         loop(i, pos+1, current, prev+current)
       }
     }
 
-    if (i == 0) {
-      0
-    } else {
-      loop(i, 1, 0, 1)
-    }
+    if (i == 0) 0 else loop(i, 1, 0, 1)
   }
 }

@@ -1,4 +1,4 @@
-package intro
+package gettingstarted
 
 object HigherOrder {
 
