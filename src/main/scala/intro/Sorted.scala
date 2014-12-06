@@ -5,14 +5,10 @@ import scala.annotation.tailrec
 object Sorted {
 
   @tailrec
-  def isSorted[A] (as: Array[A], ordered: (A,A) => Boolean): Boolean = {
+  def isSorted[A] (as: Array[A], ordered: (A,A) => Boolean): Boolean = as match {
 
-    if (as.length < 2) {
-      true
-    } else if (!ordered(as(0), as(1))){
-      false
-    } else {
-      isSorted(as.tail, ordered)
-    }
+    case Array(_) => true
+    case Array(a, b, _*) if !ordered(a, b) => false
+    case _ => isSorted(as.tail, ordered)
   }
 }
