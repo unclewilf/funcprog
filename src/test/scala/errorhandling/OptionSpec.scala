@@ -14,4 +14,16 @@ class OptionSpec extends FlatSpec with Matchers {
     None.map(_ => 200) should be(None)
   }
 
+  it should "return present result for getorelse" in {
+
+    Some("hello").getOrElse() should be("hello")
+  }
+
+  it should "return replacement result for getorelse" in {
+
+    None.getOrElse("error") should be("error")
+  }
+
+
+
 }
