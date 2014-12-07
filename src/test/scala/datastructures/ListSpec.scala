@@ -75,13 +75,6 @@ class ListSpec extends FlatSpec with Matchers {
     res should be(List2(1,2,3))
   }
 
-  it should "pass nil and cons to fold right" in new PropertyChecks {
-
-    val right = List2.foldRight(List2(1,2,3), Nil:List2[Int])(Cons(_,_))
-
-    right should be(List2(1,2,3))
-  }
-
   it should "calculate length using foldright" in new PropertyChecks {
 
     val validCombos =
