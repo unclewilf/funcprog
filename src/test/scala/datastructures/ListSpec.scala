@@ -30,7 +30,7 @@ class ListSpec extends FlatSpec with Matchers {
 
     val validCombos =
       Table(
-        ("previous", "replace", "expected"),
+        ("list", "head", "expected"),
         (List2(1), 2, List2(2)),
         (List2(1,2), 3, List2(3,2)),
         (List2(1,2,3), 4, List2(4,2,3))
@@ -38,6 +38,22 @@ class ListSpec extends FlatSpec with Matchers {
 
     forAll(validCombos) { (l: List2[Int], h: Int, expected: List2[Int]) =>
       List2.setHead(l, h) should be(expected)
+    }
+  }
+
+  it should "drop" in new PropertyChecks {
+
+    val validCombos =
+      Table(
+        ("list", "drop", "expected"),
+        (List2(1), 1, List2()),
+        (List2(1,2), 1, List2(2)),
+        (List2(1,2), 2, List2()),
+        (List2(1,2,3,4), 3, List2(4))
+      )
+
+    forAll(validCombos) { (l: List2[Int], d: Int, expected: List2[Int]) =>
+      List2.drop(l, d) should be(expected)
     }
   }
 

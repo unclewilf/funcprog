@@ -1,5 +1,7 @@
 package datastructures
 
+import scala.annotation.tailrec
+
 sealed trait List2[+A] // `List` data type, 2parameterized on a type, `A`
 case object Nil extends List2[Nothing] // A `List` data constructor representing the empty list
 case class Cons[+A](head: A, tail: List2[A]) extends List2[A] // Another data constructor, representing nonempty lists. Note that `tail` is another `List[A]`, which may be `Nil` or another `Cons`.
@@ -7,8 +9,7 @@ case class Cons[+A](head: A, tail: List2[A]) extends List2[A] // Another data co
 object List2 { // `List` companion object. Contains functions for creating and working with lists.
   def sum(ints: List2[Int]): Int = ints match { // A function that uses pattern matching to add up a list of integers
     case Nil => 0 // The sum of the empty list is 0.
-    case Cons(x,xs) => x + sum(xs) // The sum of a list starting with `x` is `x` plus the sum of the rest of the list.
-  } 
+  }
   
   def product(ds: List2[Double]): Double = ds match {
     case Nil => 1.0
@@ -56,7 +57,11 @@ object List2 { // `List` companion object. Contains functions for creating and w
     case Cons(_, t) => Cons(h, t)
   }
 
-  def drop[A](l: List2[A], n: Int): List2[A] = sys.error("todo")
+  @tailrec
+  def drop[A](l: List2[A], n: Int): List2[A] = n match {
+    case 0 => l
+    case _ => drop(List2.tail(l), n-1)
+  }
 
   def dropWhile[A](l: List2[A], f: A => Boolean): List2[A] = sys.error("todo")
 
