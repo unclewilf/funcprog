@@ -144,4 +144,24 @@ object List2 {
 
     flatMap(l)(x => if (f(x)) List2(x) else List2())
   }
+
+  def head[A](l: List2[A]): A = l match {
+    case Cons(h, t) => h
+  }
+
+  def zipWith[A](l1: List2[A], l2: List2[A])(f: (A, A) => A): List2[A] = {
+
+    @tailrec
+    def loop(l1: List2[A], l2: List2[A], res: List2[A]): List2[A] = l1 match {
+      case Nil => res
+      case Cons(x, xs) => loop(tail(l1), tail(l2), Cons(f(x, head(l2)), res))
+    }
+
+    loop(reverse(l1), reverse(l2), Nil)
+  }
+
+  def zipAdd(l1: List2[Int], l2: List2[Int]): List2[Int] = {
+
+    zipWith(l1, l2)(_ + _)
+  }
 }

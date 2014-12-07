@@ -211,4 +211,14 @@ class ListSpec extends FlatSpec with Matchers {
     res should be(List2(2,4,6))
   }
 
+  it should "zip some lists by adding numbers together" in {
+
+    val list1 = List2(1,2,3)
+    val list2 = List2(4,5,6)
+
+    val res = List2.zipAdd(list1, list2)
+
+    res should be(List2(5,7,9))
+  }
+  
 }
