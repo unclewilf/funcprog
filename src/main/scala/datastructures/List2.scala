@@ -41,15 +41,9 @@ object List2 {
       List2.foldRight(a1, a2)((a:A, b: List2[A]) => Cons(a, b))
   }
 
-//  def foldRight[A, B](as: List2[A], z: B)(f: (A, B) => B): B = {
-//    foldLeft(as, z)((a, b) => f(b,a))
-//  }
-
-  def foldRight[A, B](as: List2[A], z: B)(f: (A, B) => B): B = // Utility functions
-    as match {
-      case Nil => z
-      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
-    }
+  def foldRight[A, B](as: List2[A], z: B)(f: (A, B) => B): B = {
+    foldLeft(reverse(as), z)((a, b) => f(b,a))
+  }
 
   def sum2(ns: List2[Int]) =
     foldRight(ns, 0)((x, y) => x + y)

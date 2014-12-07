@@ -176,4 +176,11 @@ class ListSpec extends FlatSpec with Matchers {
 
     List2.map(megalist)(_+1) should be(List2(2,3,4,5,6))
   }
+
+  it should "map double to string" in {
+
+    val megalist = List2(1.0,2.1,3.2)
+
+    List2.map(megalist)(_.toString) should be(List2("1.0","2.1","3.2"))
+  }
 }
