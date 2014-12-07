@@ -66,4 +66,13 @@ class ListSpec extends FlatSpec with Matchers {
     res should be(List2(1,3,5,7))
   }
 
+  it should "init" in new PropertyChecks {
+
+    val list = List2(1,2,3,4)
+
+    val res = List2.init(list)
+
+    res should be(List2(1,2,3))
+  }
+
 }
