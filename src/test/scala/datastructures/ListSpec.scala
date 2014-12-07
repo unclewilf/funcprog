@@ -192,4 +192,23 @@ class ListSpec extends FlatSpec with Matchers {
 
     res should be(List2(2,4,6))
   }
+
+  it should "flatmap" in {
+
+    val list = List2(1,2,3)
+
+    val res = List2.flatMap(list)(i => List2(i,i))
+
+    res should be(List2(1, 1, 2, 2, 3, 3))
+  }
+
+  it should "filter while number is even via flatmap" in {
+
+    val list = List2(1,2,3,4,5,6,7)
+
+    val res = List2.filterViaFlatmap(list)(_ % 2 == 0)
+
+    res should be(List2(2,4,6))
+  }
+
 }
