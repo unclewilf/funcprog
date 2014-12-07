@@ -4,9 +4,12 @@ import org.scalatest.{Matchers, FlatSpec}
 
 class OptionSpec extends FlatSpec with Matchers {
 
-  "Option" should "map when containing value" in {
+  def add100(i: Int): Option[Int] = {
+    Some(i + 100)
+  }
 
-    Some(100).map(_+100) should be(Some(200))
+  "Option" should "map when containing value" in {
+    Some(100).map(add100) should be(Some(Some(200)))
   }
 
   it should "map none when empty" in {
@@ -23,6 +26,12 @@ class OptionSpec extends FlatSpec with Matchers {
 
     None.getOrElse("error") should be("error")
   }
+
+  it should "flatmap an option" in {
+
+    Some(100).flatMap(add100) should be(Some(200))
+  }
+
 
 
 
