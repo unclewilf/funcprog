@@ -145,4 +145,13 @@ class ListSpec extends FlatSpec with Matchers {
       List2.foldLeft(l,0)((b, _) => b + 1) should be(size)
     }
   }
+
+  it should "fold a list in reverse" in {
+
+    val li = List2(1,2,3)
+
+    val res = List2.foldLeft(li, List2[Int]())((b,a) => List2.append(List2(a), b))
+
+    res should be(List2(3,2,1))
+  }
 }
