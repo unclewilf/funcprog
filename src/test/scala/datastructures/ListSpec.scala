@@ -57,7 +57,7 @@ class ListSpec extends FlatSpec with Matchers {
     }
   }
 
-  it should "drop while number is even" in new PropertyChecks {
+  it should "drop while number is even" in {
 
     val list = List2(1,2,3,4,5,6,7)
 
@@ -66,13 +66,52 @@ class ListSpec extends FlatSpec with Matchers {
     res should be(List2(1,3,5,7))
   }
 
-  it should "init" in new PropertyChecks {
+  it should "init" in {
 
     val list = List2(1,2,3,4)
 
     val res = List2.init(list)
 
     res should be(List2(1,2,3))
+  }
+
+  it should "pass nil and cons to fold right" in new PropertyChecks {
+
+    val right = List2.foldRight(List2(1,2,3), Nil:List2[Int])(Cons(_,_))
+
+    right should be(List2(1,2,3))
+  }
+
+  it should "calculate length using foldright" in new PropertyChecks {
+
+    val validCombos =
+      Table(
+        ("list", "size"),
+        (List2(1), 1),
+        (List2(1,2), 2),
+        (List2(1,2,3), 3),
+        (List2(1,2,3,4), 4)
+      )
+
+    forAll(validCombos) { (l: List2[Int], size: Int) =>
+      List2.length(l) should be(size)
+    }
+  }
+
+  it should "fold left adding some stuff together" in new PropertyChecks {
+
+    val validCombos =
+      Table(
+        ("list", "size"),
+        (List2(1), 1),
+        (List2(1,2), 3),
+        (List2(1,2,3), 6),
+        (List2(1,2,3,4), 10)
+      )
+
+    forAll(validCombos) { (l: List2[Int], size: Int) =>
+      List2.foldLeft(l,0)(_+_) should be(size)
+    }
   }
 
 }

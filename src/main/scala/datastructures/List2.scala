@@ -96,9 +96,15 @@ object List2 {
     loop(l, List2())
   }
 
-  def length[A](l: List2[A]): Int = sys.error("todo")
+  def length[A](l: List2[A]): Int = {
+    List2.foldRight(l,0)((_, l) => l + 1)
+  }
 
-  def foldLeft[A, B](l: List2[A], z: B)(f: (B, A) => B): B = sys.error("todo")
+  @tailrec
+  def foldLeft[A, B](l: List2[A], z: B)(f: (B, A) => B): B = l match {
+    case Nil => z
+    case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+  }
 
   def map[A, B](l: List2[A])(f: A => B): List2[B] = sys.error("todo")
 }
