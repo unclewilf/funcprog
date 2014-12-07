@@ -63,21 +63,16 @@ object List2 {
 
   @tailrec
   def drop[A](l: List2[A], n: Int): List2[A] = n match {
+
     case 0 => l
     case _ => drop(List2.tail(l), n - 1)
   }
 
-  def dropWhile[A](l: List2[A], f: A => Boolean): List2[A] = {
+  @tailrec
+  def dropWhile[A](l: List2[A], f: A => Boolean): List2[A] = l match {
 
-    @tailrec
-    def loop[A](l: List2[A], r: List2[A], f: A => Boolean): List2[A] =
-      l match {
-        case Nil => r
-        case Cons(h, t) if f(h) => loop(t, r, f)
-        case Cons(h, t) => loop(t, List2.append(r, List2(h)), f)
-      }
-
-    loop(l, List2(), f)
+    case Cons(x, xs) if f(x) => dropWhile(xs, f)
+    case _ => l
   }
 
   def init[A](l: List2[A]): List2[A] = {
@@ -126,5 +121,18 @@ object List2 {
     }
 
     loop(reverse(l), List2())
+  }
+
+  def filter[A](l: List2[A])(f: A => Boolean): List2[A] = {
+
+    @tailrec
+    def loop[A](l: List2[A], r: List2[A], f: A => Boolean): List2[A] =
+      l match {
+        case Nil => r
+        case Cons(h, t) if f(h) => loop(t, List2.append(r, List2(h)), f)
+        case Cons(h, t) => loop(t, r, f)
+      }
+
+    loop(l, List2(), f)
   }
 }

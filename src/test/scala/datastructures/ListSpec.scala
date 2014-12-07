@@ -57,13 +57,13 @@ class ListSpec extends FlatSpec with Matchers {
     }
   }
 
-  it should "drop while number is even" in {
+  it should "drop while under 5" in {
 
     val list = List2(1,2,3,4,5,6,7)
 
-    val res = List2.dropWhile(list, (i: Int) => (i % 2) == 0)
+    val res = List2.dropWhile(list, (i: Int) => i < 5)
 
-    res should be(List2(1,3,5,7))
+    res should be(List2(5,6,7))
   }
 
   it should "init" in {
@@ -182,5 +182,14 @@ class ListSpec extends FlatSpec with Matchers {
     val megalist = List2(1.0,2.1,3.2)
 
     List2.map(megalist)(_.toString) should be(List2("1.0","2.1","3.2"))
+  }
+
+  it should "filter while number is even" in {
+
+    val list = List2(1,2,3,4,5,6,7)
+
+    val res = List2.filter(list)(_ % 2 == 0)
+
+    res should be(List2(2,4,6))
   }
 }
