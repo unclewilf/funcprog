@@ -57,4 +57,13 @@ class ListSpec extends FlatSpec with Matchers {
     }
   }
 
+  it should "drop while number is even" in new PropertyChecks {
+
+    val list = List2(1,2,3,4,5,6,7)
+
+    val res = List2.dropWhile(list, (i: Int) => (i % 2) == 0)
+
+    res should be(List2(1,3,5,7))
+  }
+
 }

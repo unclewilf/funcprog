@@ -1,5 +1,7 @@
 package datastructures
 
+import datastructures.List2
+
 import scala.annotation.tailrec
 
 sealed trait List2[+A] // `List` data type, 2parameterized on a type, `A`
@@ -63,7 +65,18 @@ object List2 { // `List` companion object. Contains functions for creating and w
     case _ => drop(List2.tail(l), n-1)
   }
 
-  def dropWhile[A](l: List2[A], f: A => Boolean): List2[A] = sys.error("todo")
+  def dropWhile[A](l: List2[A], f: A => Boolean): List2[A] = {
+
+    @tailrec
+    def loop[A](l: List2[A], r: List2[A], f: A => Boolean): List2[A] =
+      l match {
+        case Nil => r
+        case Cons(h, t) if f(h) => loop(t, r, f)
+        case Cons(h, t) => loop(t, List2.append(r, List2(h)), f)
+      }
+
+    loop(l, List2(), f)
+  }
 
   def init[A](l: List2[A]): List2[A] = sys.error("todo")
 
