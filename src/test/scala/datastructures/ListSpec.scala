@@ -220,5 +220,23 @@ class ListSpec extends FlatSpec with Matchers {
 
     res should be(List2(5,7,9))
   }
-  
+
+  it should "know about subsequences" in new PropertyChecks {
+
+    val seq = List2(1,2,3,4,5,6)
+
+    val combos =
+      Table(
+        ("list", "contained"),
+        (List2(1), true),
+        (List2(4), true),
+        (List2(2,3), true),
+        (List2(2,3,4), true),
+        (List2(1,4), false)
+      )
+
+    forAll(combos) { (l: List2[Int], contained: Boolean) =>
+      List2.hasSubsequence(seq, l) should be(contained)
+    }
+  }
 }

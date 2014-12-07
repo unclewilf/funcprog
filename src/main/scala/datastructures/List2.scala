@@ -164,4 +164,24 @@ object List2 {
 
     zipWith(l1, l2)(_ + _)
   }
+
+  def hasSubsequence[A](l: List2[A], sub: List2[A]): Boolean = {
+
+    def allSeq(l: List2[A], all: List2[List2[A]]): List2[List2[A]] = l match {
+      case Cons(x, Nil) =>
+        all
+      case Cons(x, xs) =>
+        val f = xs
+        val r = reverse(drop(reverse(Cons(x, xs)), 1))
+        append(allSeq(f, Cons(f, all)), allSeq(r, Cons(r, all)))
+    }
+
+    val all = allSeq(l, Nil)
+//    map(all)(println(_))
+
+    val filtered = filter(all)(_ == sub)
+
+//    println("done")
+    length(filtered) > 0
+  }
 }
