@@ -37,15 +37,19 @@ object List2 {
     case _ => 101
   }
 
-  def append[A](a1: List2[A], a2: List2[A]): List2[A] =
-    a1 match {
-      case Nil => a2
-      case Cons(h, t) => Cons(h, append(t, a2))
-    }
-
-  def foldRight[A, B](as: List2[A], z: B)(f: (A, B) => B): B = {
-    foldLeft(as, z)((a, b) => f(b,a))
+  def append[A](a1: List2[A], a2: List2[A]): List2[A] = {
+      List2.foldRight(a1, a2)((a:A, b: List2[A]) => Cons(a, b))
   }
+
+//  def foldRight[A, B](as: List2[A], z: B)(f: (A, B) => B): B = {
+//    foldLeft(as, z)((a, b) => f(b,a))
+//  }
+
+  def foldRight[A, B](as: List2[A], z: B)(f: (A, B) => B): B = // Utility functions
+    as match {
+      case Nil => z
+      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
 
   def sum2(ns: List2[Int]) =
     foldRight(ns, 0)((x, y) => x + y)
@@ -102,6 +106,17 @@ object List2 {
   def foldLeft[A, B](l: List2[A], z: B)(f: (B, A) => B): B = l match {
     case Nil => z
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+  }
+
+  def flatten[A](l: List2[List2[A]]): List2[A] = {
+
+    @tailrec
+    def loop(l:List2[List2[A]], res: List2[A]): List2[A] = l match {
+      case Nil => res
+      case Cons(x, xs) => loop(xs, List2.append(res, x))
+    }
+
+    loop(l, List2())
   }
 
   def map[A, B](l: List2[A])(f: A => B): List2[B] = sys.error("todo")

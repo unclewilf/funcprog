@@ -147,4 +147,26 @@ class ListSpec extends FlatSpec with Matchers {
 
     res should be(List2(3,2,1))
   }
+
+  it should "append" in new PropertyChecks {
+
+    val validCombos =
+      Table(
+        ("lista", "listb", "expected"),
+        (List2(1), List2(2), List2(1,2)),
+        (List2(1,2), List2(3), List2(1,2,3)),
+        (List2(1,2,3), List2(4,5), List2(1,2,3,4,5))
+      )
+
+    forAll(validCombos) { (l1: List2[Int], l2: List2[Int], expected: List2[Int]) =>
+      List2.append(l1, l2) should be(expected)
+    }
+  }
+
+  it should "flatten" in {
+
+    val megalist = List2(List2(1), List2(2))
+
+    List2.flatten(megalist) should be(List2(1,2))
+  }
 }
