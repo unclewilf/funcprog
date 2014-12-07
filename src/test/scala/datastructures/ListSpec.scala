@@ -98,20 +98,51 @@ class ListSpec extends FlatSpec with Matchers {
     }
   }
 
-  it should "fold left adding some stuff together" in new PropertyChecks {
+  it should "fold left sum" in new PropertyChecks {
 
     val validCombos =
       Table(
-        ("list", "size"),
+        ("list", "sum"),
         (List2(1), 1),
         (List2(1,2), 3),
         (List2(1,2,3), 6),
         (List2(1,2,3,4), 10)
       )
 
-    forAll(validCombos) { (l: List2[Int], size: Int) =>
-      List2.foldLeft(l,0)(_+_) should be(size)
+    forAll(validCombos) { (l: List2[Int], sum: Int) =>
+      List2.foldLeft(l,0)(_+_) should be(sum)
     }
   }
 
+  it should "fold left product" in new PropertyChecks {
+
+    val validCombos =
+      Table(
+        ("list", "product"),
+        (List2(1), 1),
+        (List2(1,2), 2),
+        (List2(1,2,3), 6),
+        (List2(1,2,3,4), 24)
+      )
+
+    forAll(validCombos) { (l: List2[Int], product: Int) =>
+      List2.foldLeft(l,1)(_*_) should be(product)
+    }
+  }
+
+  it should "fold left size" in new PropertyChecks {
+
+    val validCombos =
+      Table(
+        ("list", "size"),
+        (List2(1), 1),
+        (List2(1,2), 2),
+        (List2(1,2,3), 3),
+        (List2(1,2,3,4), 4)
+      )
+
+    forAll(validCombos) { (l: List2[Int], size: Int) =>
+      List2.foldLeft(l,0)((b, _) => b + 1) should be(size)
+    }
+  }
 }

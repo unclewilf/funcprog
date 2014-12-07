@@ -102,8 +102,12 @@ object List2 {
 
   @tailrec
   def foldLeft[A, B](l: List2[A], z: B)(f: (B, A) => B): B = l match {
-    case Nil => z
-    case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+    case Nil =>
+      println(z + ":n")
+      z
+    case Cons(x, xs) =>
+      println(z + ":c")
+      foldLeft(xs, f(z, x))(f)
   }
 
   def map[A, B](l: List2[A])(f: A => B): List2[B] = sys.error("todo")
