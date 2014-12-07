@@ -31,4 +31,10 @@ class TreeSpec extends FlatSpec with Matchers {
     }
   }
 
+  it should "map" in new {
+
+    val expected = Branch(Branch(Leaf(2), Leaf(3)), Branch(Leaf(4), Leaf(5)))
+
+    Tree.map(fourLeaf)(_ + 1) should be(expected)
+  }
 }
