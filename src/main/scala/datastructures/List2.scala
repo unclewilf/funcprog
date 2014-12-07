@@ -108,6 +108,10 @@ object List2 {
     case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
   }
 
+  def reverse[A](l: List2[A]): List2[A] = {
+    List2.foldLeft(l, List2[A]())((b,a) => Cons(a,b))
+  }
+
   def flatten[A](l: List2[List2[A]]): List2[A] = {
 
     @tailrec
@@ -119,5 +123,14 @@ object List2 {
     loop(l, List2())
   }
 
-  def map[A, B](l: List2[A])(f: A => B): List2[B] = sys.error("todo")
+  def map[A, B](l: List2[A])(f: A => B): List2[B] = {
+
+    @tailrec
+    def loop(l: List2[A], r: List2[B]): List2[B] = l match {
+      case Nil => r
+      case Cons(x, xs) => loop(xs, Cons(f(x), r))
+    }
+
+    loop(reverse(l), List2())
+  }
 }

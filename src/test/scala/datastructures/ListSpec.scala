@@ -143,7 +143,7 @@ class ListSpec extends FlatSpec with Matchers {
 
     val li = List2(1,2,3)
 
-    val res = List2.foldLeft(li, List2[Int]())((b,a) => List2.append(List2(a), b))
+    val res = List2.reverse(li)
 
     res should be(List2(3,2,1))
   }
@@ -168,5 +168,12 @@ class ListSpec extends FlatSpec with Matchers {
     val megalist = List2(List2(1), List2(2))
 
     List2.flatten(megalist) should be(List2(1,2))
+  }
+
+  it should "map to increase each element by 1" in {
+
+    val megalist = List2(1,2,3,4,5)
+
+    List2.map(megalist)(_+1) should be(List2(2,3,4,5,6))
   }
 }
