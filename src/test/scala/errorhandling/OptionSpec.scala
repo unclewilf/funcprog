@@ -32,7 +32,23 @@ class OptionSpec extends FlatSpec with Matchers {
     Some(100).flatMap(add100) should be(Some(200))
   }
 
+  it should "orelse when defined" in {
 
+    Some(100).orElse(Some(0)) should be(Some(100))
+  }
 
+  it should "orelse when undefined" in {
 
+    None.orElse(Some(0)) should be(Some(0))
+  }
+
+  it should "filter matches" in {
+
+    Some(100).filter(_ == 100) should be(Some(100))
+  }
+
+  it should "filter no matches" in {
+
+    Some(100).filter(_ != 100) should be(None)
+  }
 }
